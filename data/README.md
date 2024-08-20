@@ -3,5 +3,5 @@ This folder contains two subfolders:
    * **bin**: Binary classification task for Relevance
    * **quad**: Multi-class classification task for QuadClass
    * **bin_quad**: Binary classification for each QuadClass category (MatCoop, MatConf, VerCoop, VerConf)
-* **quality**:
-   * includes the  "master_quality_data.csv" file containing the quality assessment metrics for the different machine-translation outputs at the sentece level
+* **quality**: XXX pending XXX
+
