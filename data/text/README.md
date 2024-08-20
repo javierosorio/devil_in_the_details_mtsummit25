@@ -15,7 +15,7 @@ The text includes the following languages:
 * **es_en** Translation from Spanish to English
 * **ar_en** Translation from Arabic to English
  
-Each of the translations () used the following machine-translation tools:
+We used the following machine-translation tools to generate the translations:
 * Google translate
 * DeepL
 * Deep Learning
