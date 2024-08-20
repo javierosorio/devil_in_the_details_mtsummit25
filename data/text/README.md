@@ -1,10 +1,6 @@
-The **master_text_data.csv** file at the sentence the following columns:
-* sentence ID (unique identifier)
-* Native languages (EN, ES, AR)
-* ES to EN translations (Google Translate, DeepL, Deep Learning, Transformers)
-* AR to EN translations (Google Translate, DeepL, Deep Learning, Transformers)
-* EN to ES translations (Google Translate, DeepL, Deep Learning, Transformers)
-* EN to AR translations (Google Translate, DeepL, Deep Learning, Transformers)
-* Binary classification 
-* Quadclass (multi class)
-* Binary Quadclass (dummies for each class)
+This folder contains text data in .xslx and .tsv format for each task and language.
+
+The subfolders contain the following data:
+* **bin**: Binary classification task for Relevance
+* **quad**: Multi-class classification task for QuadClass
+* **bin_quad**: Binary classification for each QuadClass category (MatCoop, MatConf, VerCoop, VerConf)
