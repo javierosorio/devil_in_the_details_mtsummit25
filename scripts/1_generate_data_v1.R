@@ -22,7 +22,7 @@ pacman::p_load(here, glue, openxlsx, xtable, tidyverse, readxl, dplyr, stringr, 
 
 # Get the data
 
-data.master <- read_excel("data/raw_data/data_master.xlsx")  
+data.master <- read_excel("data/raw_data/data_master_text.xlsx")  
 
 
 

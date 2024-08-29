@@ -35,6 +35,13 @@ data.master <- data.master %>% drop_na()
 # This eliminates 167 rows with NAs
 
 
+# Export clean data frame
+write.table(data.master, file=glue('data/raw_data/data_master_text_clean.tsv'), sep='\t', row.names = FALSE)
+write.xlsx(data.master,  file=glue('data/raw_data/data_master_text_clean.xlsx'))
+write.csv(data.master,   file=glue('data/raw_data/data_master_text_clean.csv', row.names=FALSE))
+
+
+
 
 
 # CREATE FUNCTIONS --------------------------------------------------
