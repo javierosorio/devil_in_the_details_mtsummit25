@@ -2,9 +2,9 @@ This folder contains text data in .xslx and .tsv format for each task and langua
 
 <br>
 
-The **data_master_text.xlsx** file contains the text data at the sentence level in the native languages (English, Spanish, and Arabic) as well as all the different machine-translations from Spanish and Arabic into English and the reverse translation from English to Spanish and Arabic.
+The **data_master_text_clean.xlsx** file contains the text data at the sentence level in the native languages (English, Spanish, and Arabic) as well as all the different machine-translations from Spanish and Arabic into English and the reverse translation from English to Spanish and Arabic.
 
-The **data_master_text.zip** file includes the same information in .tsv format.
+The **data_master_text_clean.tsv** and **data_master_text_clean.csv**  files include the same information in .tsv and .csv format.
 
 <br>
 
