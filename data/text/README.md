@@ -1,4 +1,4 @@
-This folder contains text data in .xslx and .tsv format for each task and language.
+This folder contains text data in .xslx, .tsv and .csv format for each task and language.
 
 <br>
 
