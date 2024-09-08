@@ -4,7 +4,7 @@ This folder contains two subfolders:
    * **quad**: Multi-class classification task for QuadClass
    * **bin_quad**: Binary classification for each QuadClass category (MatCoop, MatConf, VerCoop, VerConf)
 * **quality**: XXX pending XXX
-* **linguistic_features**: This folder contains data in csv format on linguistic features present in each corpus. Further information on the organization of this data is in the README within the folder. The linguistics features analyzed are:
+* **linguistic_analysis**: This folder contains data in csv format on linguistic features present in each corpus. Further information on the organization of this data is in the README within the folder. The linguistics features analyzed are:
   * **word count**
   * **lemma count**
   * **noun count**
