@@ -6,25 +6,229 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, message=FALSE)
+library(ggplot2)
+library(knitr)
+library(tidyr)
+library(tidyverse)
 ```
 
-## R Markdown
+```{r rarity_diff_plots_en}
+df <- read_csv("sentence_level/differences/within_languages/en_rarity_difference.csv")
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(2,17),
+    names_to = "lang",
+    values_to = "rarity"
+  )
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+general_df <- long_df[grepl("general", long_df$lang), ]
+general_es_df <- general_df[grepl("es_", general_df$lang), ]
+general_ar_df <- general_df[grepl("ar_", general_df$lang), ]
 
-```{r cars}
-summary(cars)
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+genre_es_df <- genre_df[grepl("es_", genre_df$lang), ]
+genre_ar_df <- genre_df[grepl("ar_", genre_df$lang), ]
+
+ggplot(general_es_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="Spanish to English General Rarity Difference from Native")
+
+ggplot(general_ar_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="Arabic to English General Rarity Difference from Native")
+
+ggplot(genre_es_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="Spanish to English Genre Rarity Difference from Native")
+
+ggplot(genre_ar_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="Arabic to English Genre Rarity Difference from Native")
+```
+```{r rarity_diff_plots_es}
+df <- read_csv("sentence_level/differences/within_languages/es_rarity_difference.csv")
+
+print(seq.int(2,12,2))
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(2,9),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+
+ggplot(general_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="English to Spanish General Rarity Difference from Native")
+
+ggplot(genre_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="English to Spanish Genre Rarity Difference from Native")
 ```
 
-## Including Plots
+```{r rarity_diff_plots_ar}
+df <- read_csv("sentence_level/differences/within_languages/ar_rarity_difference.csv")
 
-You can also embed plots, for example:
+print(seq.int(2,12,2))
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(2,9),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+
+ggplot(general_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="English to Arabic General Rarity Difference from Native")
+
+ggplot(genre_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="English to Arabic Genre Rarity Difference from Native")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r rarity_plots_en}
+df <- read_csv("sentence_level/base_measurements/en_rarity.csv")
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(2,19),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+long_df$lang <- factor(
+  long_df$lang,
+  levels=c("en_general_rare_proportion",
+           "en_genre_rare_proportion",
+           "es_en_DEEP_general_rare_proportion",
+           "es_en_DEEP_genre_rare_proportion",
+           "es_en_DEEPL_general_rare_proportion",
+           "es_en_DEEPL_genre_rare_proportion",
+           "es_en_GOOGLE_general_rare_proportion",
+           "es_en_GOOGLE_genre_rare_proportion",
+           "es_en_TRANSFORMERS_general_rare_proportion",
+           "es_en_TRANSFORMERS_genre_rare_proportion",
+           "ar_en_DEEP_general_rare_proportion",
+           "ar_en_DEEP_genre_rare_proportion",
+           "ar_en_DEEPL_general_rare_proportion",
+           "ar_en_DEEPL_genre_rare_proportion",
+           "ar_en_GOOGLE_general_rare_proportion",
+           "ar_en_GOOGLE_genre_rare_proportion",
+           "ar_en_TRANSFORMERS_general_rare_proportion",
+           "ar_en_TRANSFORMERS_genre_rare_proportion"))
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+general_es_df <- general_df[grepl("es_en|en_general_rare", general_df$lang), ]
+general_ar_df <- general_df[grepl("ar_|en_general_rare", general_df$lang), ]
+
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+genre_es_df <- genre_df[grepl("es_en|en_genre_rare", genre_df$lang), ]
+genre_ar_df <- genre_df[grepl("ar_|en_genre_rare", genre_df$lang), ]
+
+ggplot(general_es_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("Native", "DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="Spanish to English General Rarity")
+
+ggplot(general_ar_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("Native", "DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="Arabic to English General Rarity")
+
+ggplot(genre_es_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("Native", "DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="Spanish to English Genre Rarity")
+
+ggplot(genre_ar_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("Native", "DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="Arabic to English Genre Rarity")
+```
+
+```{r rarity_plots_es}
+df <- read_csv("sentence_level/base_measurements/es_rarity.csv")
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(2,9),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+
+ggplot(general_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("Native", "DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="English to Spanish General Rarity")
+
+ggplot(genre_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  scale_x_discrete(labels=c("Native", "DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="English to Spanish Genre Rarity")
+```
+
+```{r rarity_plots_ar}
+df <- read_csv("sentence_level/base_measurements/ar_rarity.csv")
+
+print(seq.int(2,12,2))
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(2,9),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+
+ggplot(general_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  #scale_x_discrete(labels=c("Native", "DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="English to Arabic General Rarity")
+
+ggplot(genre_df, aes(x=lang, y=rarity)) +
+  geom_violin() +
+  #scale_x_discrete(labels=c("Native", "DEEP", "DEEPL", "GOOGLE", "TRANS")) +
+  theme(axis.text.x = element_text(vjust=0.5, angle=45)) +
+  labs(title="English to Arabic Genre Rarity")
+```
