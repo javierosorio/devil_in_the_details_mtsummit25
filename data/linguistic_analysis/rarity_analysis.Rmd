@@ -1,0 +1,372 @@
+---
+title: "coling2024_loess_curves"
+author: "Amber Converse"
+date: "2024-09-11"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE)
+library(ggplot2)
+library(tidyverse)
+```
+
+```{r kruskal_wallis_en}
+df <- read_csv("sentence_level/base_measurements/en_rarity.csv")
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(2,19),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+general_es_df <- general_df[grepl("es_|en_general", general_df$lang), ]
+general_ar_df <- general_df[grepl("ar_|en_general", general_df$lang), ]
+
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+genre_es_df <- genre_df[grepl("es_|en_genre", genre_df$lang), ]
+genre_ar_df <- genre_df[grepl("ar_|en_genre", genre_df$lang), ]
+
+general_es_df$lang <- ordered(general_es_df$lang,
+                              levels=c("en_general_rarity",
+                              "es_en_DEEP_general_rarity",
+                              "es_en_DEEPL_general_rarity",
+                              "es_en_GOOGLE_general_rarity",
+                            "es_en_TRANSFORMERS_general_rarity"))
+general_ar_df$lang <- ordered(general_ar_df$lang,
+                              levels=c("en_general_rarity",
+                              "ar_en_DEEP_general_rarity",
+                              "ar_en_DEEPL_general_rarity",
+                              "ar_en_GOOGLE_general_rarity",
+                            "ar_en_TRANSFORMERS_general_rarity"))
+genre_es_df$lang <- ordered(genre_es_df$lang,
+                              levels=c("en_genre_rarity",
+                              "es_en_DEEP_genre_rarity",
+                              "es_en_DEEPL_genre_rarity",
+                              "es_en_GOOGLE_genre_rarity",
+                            "es_en_TRANSFORMERS_genre_rarity"))
+genre_ar_df$lang <- ordered(genre_ar_df$lang,
+                              levels=c("en_genre_rarity",
+                              "ar_en_DEEP_genre_rarity",
+                              "ar_en_DEEPL_genre_rarity",
+                              "ar_en_GOOGLE_genre_rarity",
+                            "ar_en_TRANSFORMERS_genre_rarity"))
+
+group_by(general_es_df, lang) %>% 
+  summarize(
+    mean = mean(rarity, na.rm = TRUE),
+    sd = sd(rarity, na.rm = TRUE),
+    median = median(rarity, na.rm = TRUE),
+    IQR = IQR(rarity, na.rm = TRUE)
+  )
+group_by(general_ar_df, lang) %>% 
+  summarize(
+    mean = mean(rarity, na.rm = TRUE),
+    sd = sd(rarity, na.rm = TRUE),
+    median = median(rarity, na.rm = TRUE),
+    IQR = IQR(rarity, na.rm = TRUE)
+  )
+group_by(genre_es_df, lang) %>% 
+  summarize(
+    mean = mean(rarity, na.rm = TRUE),
+    sd = sd(rarity, na.rm = TRUE),
+    median = median(rarity, na.rm = TRUE),
+    IQR = IQR(rarity, na.rm = TRUE)
+  )
+group_by(genre_ar_df, lang) %>% 
+  summarize(
+    mean = mean(rarity, na.rm = TRUE),
+    sd = sd(rarity, na.rm = TRUE),
+    median = median(rarity, na.rm = TRUE),
+    IQR = IQR(rarity, na.rm = TRUE)
+  )
+
+pairwise.wilcox.test(general_es_df$rarity, general_es_df$lang, p.adjust.method = "BH")
+pairwise.wilcox.test(general_ar_df$rarity, general_ar_df$lang, p.adjust.method = "BH")
+pairwise.wilcox.test(genre_es_df$rarity, genre_es_df$lang, p.adjust.method = "BH")
+pairwise.wilcox.test(genre_ar_df$rarity, genre_ar_df$lang, p.adjust.method = "BH")
+```
+Summary of Significance Wilcox Pairwise Test on Rarity:\\
+General:
+es->en Deep < en (p < 0.0001)
+es->en DeepL < en (p < 0.0001)
+es->en GT < en (p < 0.0001)
+es->en OPUS < en (p < 0.00001)
+
+ar->en Deep < en (p < 0.0001)
+ar->en DeepL < en (p < 0.03)
+ar->en GT < en (p < 0.001)
+ar->en OPUS < en (p < 0.0001)
+
+Genre:
+es->en Deep < en (p < 0.0001)
+es->en DeepL < en (p < 0.0001)
+es->en GT < en (p < 0.0001)
+es->en OPUS < en (p < 0.00001)
+
+ar->en Deep < en (p < 0.0001)
+ar->en DeepL < en (p < 0.0001)
+ar->en GT < en (p < 0.0001)
+ar->en OPUS < en (p < 0.0001)
+
+```{r kruskal_wallis_es}
+df <- read_csv("sentence_level/base_measurements/es_rarity.csv")
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(2,11),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+
+general_df$lang <- ordered(general_df$lang,
+                           levels=c("es_general_rarity",
+                           "en_es_DEEP_general_rarity",
+                           "en_es_DEEPL_general_rarity",
+                           "en_es_GOOGLE_general_rarity",
+                           "en_es_TRANSFORMERS_general_rarity"))
+genre_df$lang <- ordered(genre_df$lang,
+                           levels=c("es_genre_rarity",
+                           "en_es_DEEP_genre_rarity",
+                           "en_es_DEEPL_genre_rarity",
+                           "en_es_GOOGLE_genre_rarity",
+                           "en_es_TRANSFORMERS_genre_rarity"))
+
+group_by(general_df, lang) %>% 
+  summarize(
+    mean = mean(rarity, na.rm = TRUE),
+    sd = sd(rarity, na.rm = TRUE),
+    median = median(rarity, na.rm = TRUE),
+    IQR = IQR(rarity, na.rm = TRUE)
+  )
+group_by(genre_df, lang) %>% 
+  summarize(
+    mean = mean(rarity, na.rm = TRUE),
+    sd = sd(rarity, na.rm = TRUE),
+    median = median(rarity, na.rm = TRUE),
+    IQR = IQR(rarity, na.rm = TRUE)
+  )
+
+pairwise.wilcox.test(general_df$rarity, general_df$lang, p.adjust.method = "BH")
+pairwise.wilcox.test(genre_df$rarity, genre_df$lang, p.adjust.method = "BH")
+```
+
+General:
+en->es Deep > es (p < 0.0001)
+en->es DeepL > es (p < 0.0001)
+en->es GT > es (p < 0.0001)
+en->es OPUS > es NOT SIGNIFICANT (p>0.9!!!)
+
+Genre:
+en->es Deep > es NOT SIGNIFICANT
+en->es DeepL > es NOT SIGNIFICANT
+en->es GT > es NOT SIGNIFICANT
+en->es OPUS < es  (p < 0.0001)
+
+```{r kruskal_wallis_ar}
+df <- read_csv("sentence_level/base_measurements/ar_rarity.csv")
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(2,11),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+
+general_df$lang <- ordered(general_df$lang,
+                           levels=c("ar_general_rarity",
+                           "en_ar_DEEP_general_rarity",
+                           "en_ar_DEEPL_general_rarity",
+                           "en_ar_GOOGLE_general_rarity",
+                           "en_ar_TRANSFORMERS_general_rarity"))
+genre_df$lang <- ordered(genre_df$lang,
+                           levels=c("ar_genre_rarity",
+                           "en_ar_DEEP_genre_rarity",
+                           "en_ar_DEEPL_genre_rarity",
+                           "en_ar_GOOGLE_genre_rarity",
+                           "en_ar_TRANSFORMERS_genre_rarity"))
+
+group_by(general_df, lang) %>% 
+  summarize(
+    mean = mean(rarity, na.rm = TRUE),
+    sd = sd(rarity, na.rm = TRUE),
+    median = median(rarity, na.rm = TRUE),
+    IQR = IQR(rarity, na.rm = TRUE)
+  )
+group_by(genre_df, lang) %>% 
+  summarize(
+    mean = mean(rarity, na.rm = TRUE),
+    sd = sd(rarity, na.rm = TRUE),
+    median = median(rarity, na.rm = TRUE),
+    IQR = IQR(rarity, na.rm = TRUE)
+  )
+
+pairwise.wilcox.test(general_df$rarity, general_df$lang, p.adjust.method = "BH")
+pairwise.wilcox.test(genre_df$rarity, genre_df$lang, p.adjust.method = "BH")
+```
+
+General:
+en->ar Deep < ar (p < 0.0001)
+en->ar DeepL < ar (p < 0.0001)
+en->ar GT < ar (p < 0.0001)
+en->ar OPUS < ar (p < 0.002)
+
+Genre:
+en->ar Deep < ar (p < 0.0001)
+en->ar DeepL < ar (p < 0.0001)
+en->ar GT < ar (p < 0.0001)
+en->ar OPUS < ar (p < 0.0001)
+
+```{r loess_curves_en}
+df <- read_csv("sentence_level/base_measurements/en_rarity.csv")
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(3,19),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+
+ggplot(general_df, aes(x=en_general_rarity, y=rarity,
+                       group=lang, color=lang)) +
+  stat_smooth(method="loess") +
+  labs(title="Native Rarity vs. MT Rarity", x="Native Rarity",
+       y="MT Rarity", color="Translation Type") +
+  scale_color_hue(labels=c("ar->en (Deep)", "ar->en (DeepL)",
+                              "ar->en (GT)", "ar->en (OPUS)",
+                              "es->en (Deep)", "es->en (DeepL)",
+                              "es->en (GT)", "es->en (OPUS)"))
+```
+
+```{r loess_curves_es}
+df <- read_csv("sentence_level/base_measurements/es_rarity.csv")
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(3,11),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+
+ggplot(general_df, aes(x=es_general_rarity, y=rarity,
+                       group=lang, color=lang)) +
+  stat_smooth(method="loess") +
+  labs(title="Native Rarity vs. MT Rarity", x="Native Rarity",
+       y="MT Rarity", color="Translation Type") +
+  scale_color_hue(labels=c("en->es (Deep)", "en->es (DeepL)",
+                              "en->es (GT)", "en->es (OPUS)"))
+```
+
+```{r loess_curves_ar}
+df <- read_csv("sentence_level/base_measurements/ar_rarity.csv")
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(3,11),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+
+genre_df <- long_df[grepl("genre", long_df$lang), ]
+
+ggplot(general_df, aes(x=ar_general_rarity, y=rarity,
+                       group=lang, color=lang)) +
+  stat_smooth(method="loess") +
+  labs(title="Native Rarity vs. MT Rarity", x="Native Rarity",
+       y="MT Rarity", color="Translation Type") +
+  scale_color_hue(labels=c("en->ar (Deep)", "en->ar (DeepL)",
+                              "en->ar (GT)", "en->ar (OPUS)"))
+```
+
+```{r en_rarity_over_time}
+
+df <- read_csv("corpus_level/rarity_different_vocab_sizes_summary.csv")
+
+df <- df[, c("val", "en_general_rarity",
+             "es_en_DEEP_general_rarity", 
+             "es_en_DEEPL_general_rarity",
+             "es_en_GOOGLE_general_rarity",
+             "es_en_TRANSFORMERS_general_rarity",
+             "ar_en_DEEP_general_rarity",
+             "ar_en_DEEPL_general_rarity",
+             "ar_en_GOOGLE_general_rarity",
+             "ar_en_TRANSFORMERS_general_rarity")]
+
+ggplot(df, aes(x=val)) +
+  geom_line(aes(y=en_general_rarity, color="Native")) +
+  geom_line(aes(y=es_en_DEEP_general_rarity, color="es->en (Deep)")) +
+  geom_line(aes(y=es_en_DEEPL_general_rarity, color="es->en (DeepL)")) +
+  geom_line(aes(y=es_en_GOOGLE_general_rarity, color="es->en (GT)")) +
+  geom_line(aes(y=es_en_TRANSFORMERS_general_rarity, color="es->en (OPUS)")) +
+  geom_line(aes(y=ar_en_DEEP_general_rarity, color="ar->en (Deep)")) +
+  geom_line(aes(y=ar_en_DEEPL_general_rarity, color="ar->en (DeepL)")) +
+  geom_line(aes(y=ar_en_GOOGLE_general_rarity, color="ar->en (GT)")) +
+  geom_line(aes(y=ar_en_TRANSFORMERS_general_rarity, color="ar->en (OPUS)")) +
+  labs(title="Common Vocab Size vs. General Rarity",
+       x="Common Vocab Size",
+       y="General Rarity",
+       color="Language")
+```
+```{r es_rarity_over_time}
+
+df <- read_csv("corpus_level/rarity_different_vocab_sizes_summary.csv")
+
+df <- df[, c("val", "es_general_rarity",
+             "en_es_DEEP_general_rarity", 
+             "en_es_DEEPL_general_rarity",
+             "en_es_GOOGLE_general_rarity",
+             "en_es_TRANSFORMERS_general_rarity")]
+
+ggplot(df, aes(x=val)) +
+  geom_line(aes(y=es_general_rarity, color="Native")) +
+  geom_line(aes(y=en_es_DEEP_general_rarity, color="en->es (Deep)")) +
+  geom_line(aes(y=en_es_DEEPL_general_rarity, color="en->es (DeepL)")) +
+  geom_line(aes(y=en_es_GOOGLE_general_rarity, color="en->es (GT)")) +
+  geom_line(aes(y=en_es_TRANSFORMERS_general_rarity, color="en->es (OPUS)")) +
+  labs(title="Common Vocab Size vs. General Rarity",
+       x="Common Vocab Size",
+       y="General Rarity",
+       color="Language")
+```
+
+```{r ar_rarity_over_time}
+
+df <- read_csv("corpus_level/rarity_different_vocab_sizes_summary.csv")
+
+df <- df[, c("val", "ar_general_rarity",
+             "en_ar_DEEP_general_rarity", 
+             "en_ar_DEEPL_general_rarity",
+             "en_ar_GOOGLE_general_rarity",
+             "en_ar_TRANSFORMERS_general_rarity")]
+
+ggplot(df, aes(x=val)) +
+  geom_line(aes(y=ar_general_rarity, color="Native")) +
+  geom_line(aes(y=en_ar_DEEP_general_rarity, color="en->ar (Deep)")) +
+  geom_line(aes(y=en_ar_DEEPL_general_rarity, color="en->ar (DeepL)")) +
+  geom_line(aes(y=en_ar_GOOGLE_general_rarity, color="en->ar (GT)")) +
+  geom_line(aes(y=en_ar_TRANSFORMERS_general_rarity, color="en->ar (OPUS)")) +
+  labs(title="Common Vocab Size vs. General Rarity",
+       x="Common Vocab Size",
+       y="General Rarity",
+       color="Language")
+```
