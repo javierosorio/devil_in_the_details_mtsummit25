@@ -1,4 +1,4 @@
-id,en_ar_DEEP_difference_noun_counts,en_ar_DEEP_difference_verb_counts,en_ar_DEEP_difference_lemma_counts,en_ar_DEEPL_difference_noun_counts,en_ar_DEEPL_difference_verb_counts,en_ar_DEEPL_difference_lemma_counts,en_ar_GOOGLE_difference_noun_counts,en_ar_GOOGLE_difference_verb_counts,en_ar_GOOGLE_difference_lemma_counts,en_ar_TRANSFORMERS_difference_noun_counts,en_ar_TRANSFORMERS_difference_verb_counts,en_ar_TRANSFORMERS_difference_lemma_counts
+id,en_ar_DEEP_to_ar_difference_noun_counts,en_ar_DEEP_to_ar_difference_verb_counts,en_ar_DEEP_to_ar_difference_lemma_counts,en_ar_DEEPL_to_ar_difference_noun_counts,en_ar_DEEPL_to_ar_difference_verb_counts,en_ar_DEEPL_to_ar_difference_lemma_counts,en_ar_GOOGLE_to_ar_difference_noun_counts,en_ar_GOOGLE_to_ar_difference_verb_counts,en_ar_GOOGLE_to_ar_difference_lemma_counts,en_ar_TRANSFORMERS_to_ar_difference_noun_counts,en_ar_TRANSFORMERS_to_ar_difference_verb_counts,en_ar_TRANSFORMERS_to_ar_difference_lemma_counts
 2011/s/2011/463/305:7,0,1,0,1.0,0.0,-1.0,1,0,-1,1.0,0.0,-2.0
 2005/s/2005/686/23:1,0,-5,-4,-2.0,-2.0,-6.0,0,-5,-3,-2.0,-2.0,-1.0
 2011/s/2011/245/131:3,3,-2,3,1.0,0.0,2.0,3,-2,3,3.0,-2.0,4.0

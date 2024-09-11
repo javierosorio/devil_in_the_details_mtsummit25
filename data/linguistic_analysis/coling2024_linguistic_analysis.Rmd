@@ -125,24 +125,24 @@ long_df <- df %>%
 
 long_df$lang <- factor(
   long_df$lang,
-  levels=c("en_general_rare_proportion",
-           "en_genre_rare_proportion",
-           "es_en_DEEP_general_rare_proportion",
-           "es_en_DEEP_genre_rare_proportion",
-           "es_en_DEEPL_general_rare_proportion",
-           "es_en_DEEPL_genre_rare_proportion",
-           "es_en_GOOGLE_general_rare_proportion",
-           "es_en_GOOGLE_genre_rare_proportion",
-           "es_en_TRANSFORMERS_general_rare_proportion",
-           "es_en_TRANSFORMERS_genre_rare_proportion",
-           "ar_en_DEEP_general_rare_proportion",
-           "ar_en_DEEP_genre_rare_proportion",
-           "ar_en_DEEPL_general_rare_proportion",
-           "ar_en_DEEPL_genre_rare_proportion",
-           "ar_en_GOOGLE_general_rare_proportion",
-           "ar_en_GOOGLE_genre_rare_proportion",
-           "ar_en_TRANSFORMERS_general_rare_proportion",
-           "ar_en_TRANSFORMERS_genre_rare_proportion"))
+  levels=c("en_general_rarity",
+           "en_genre_rarity",
+           "es_en_DEEP_general_rarity",
+           "es_en_DEEP_genre_rarity",
+           "es_en_DEEPL_general_rarity",
+           "es_en_DEEPL_genre_rarity",
+           "es_en_GOOGLE_general_rarity",
+           "es_en_GOOGLE_genre_rarity",
+           "es_en_TRANSFORMERS_general_rarity",
+           "es_en_TRANSFORMERS_genre_rarity",
+           "ar_en_DEEP_general_rarity",
+           "ar_en_DEEP_genre_rarity",
+           "ar_en_DEEPL_general_rarity",
+           "ar_en_DEEPL_genre_rarity",
+           "ar_en_GOOGLE_general_rarity",
+           "ar_en_GOOGLE_genre_rarity",
+           "ar_en_TRANSFORMERS_general_rarity",
+           "ar_en_TRANSFORMERS_genre_rarity"))
 
 general_df <- long_df[grepl("general", long_df$lang), ]
 general_es_df <- general_df[grepl("es_en|en_general_rare", general_df$lang), ]
