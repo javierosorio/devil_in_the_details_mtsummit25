@@ -13,6 +13,20 @@ library(tidyr)
 library(tidyverse)
 ```
 
+```{r vocab_sizes}
+df <- read_csv("corpus_level/en_unique_vocab.csv")
+
+
+
+ggplot(data, aes(x=xvar, y=yvar, fill= zvar)) + 
+  geom_tile() +  
+  facet_grid(rows=vars(group1),cols=vars(group2),scales="free") +
+  theme(axis.text.x = element_text(angle=90, vjust=.5, hjust=1)) + 
+  theme_bw() + 
+  xlab("xxxx") + ylab("yyyy") + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) 
+```
+
 ```{r rarity_diff_plots_en}
 df <- read_csv("sentence_level/differences/within_languages/en_rarity_difference.csv")
 

@@ -9,6 +9,8 @@ output: pdf_document
 knitr::opts_chunk$set(echo = FALSE, message=FALSE)
 library(ggplot2)
 library(tidyverse)
+library(grid)
+library(gridExtra)
 ```
 
 ```{r kruskal_wallis_en}
@@ -226,6 +228,95 @@ en->ar Deep < ar (p < 0.0001)
 en->ar DeepL < ar (p < 0.0001)
 en->ar GT < ar (p < 0.0001)
 en->ar OPUS < ar (p < 0.0001)
+
+```{r loess_curves_complete}
+df <- read_csv("sentence_level/base_measurements/en_rarity.csv")
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(3,19),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+general_es_df <- general_df[grepl("es_|en_general", general_df$lang), ]
+general_ar_df <- general_df[grepl("ar_|en_general", general_df$lang), ]
+
+general_es_df$lang <- ordered(general_es_df$lang,
+                              levels=c("es_en_DEEP_general_rarity",
+                              "es_en_DEEPL_general_rarity",
+                              "es_en_GOOGLE_general_rarity",
+                            "es_en_TRANSFORMERS_general_rarity"))
+general_ar_df$lang <- ordered(general_ar_df$lang,
+                              levels=c("ar_en_DEEP_general_rarity",
+                              "ar_en_DEEPL_general_rarity",
+                              "ar_en_GOOGLE_general_rarity",
+                            "ar_en_TRANSFORMERS_general_rarity"))
+
+p1 <- ggplot(general_ar_df, aes(x=en_general_rarity, y=rarity,
+                       group=lang, color=lang)) +
+  geom_smooth(method="loess", size=1.5) +
+  labs(title="Arabic to English", x="Native Rarity",
+       y="MT Rarity", color="Translation Type") +
+  scale_color_hue(labels=c("Deep", "DeepL",
+                              "GT", "OPUS")) +
+  geom_abline(intercept = 0, slope = 1, color="red", linetype="dashed", size=1) +
+  theme_minimal()
+p2 <- ggplot(general_es_df, aes(x=en_general_rarity, y=rarity,
+                       group=lang, color=lang)) +
+  geom_smooth(method="loess", size=1.5) +
+  labs(title="Spanish to English", x="Native Rarity",
+       y="MT Rarity", color="Translation Type") +
+  scale_color_hue(labels=c("Deep", "DeepL",
+                              "GT", "OPUS")) +
+  geom_abline(intercept = 0, slope = 1, color="red", linetype="dashed", size=1) +
+  theme_minimal()
+
+df <- read_csv("sentence_level/base_measurements/es_rarity.csv")
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(3,11),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+
+p3 <- ggplot(general_df, aes(x=es_general_rarity, y=rarity,
+                       group=lang, color=lang)) +
+  geom_smooth(method="loess", size=1.5) +
+  labs(title="English to Spanish", x="Native Rarity",
+       y="MT Rarity", color="Translation Type") +
+  scale_color_hue(labels=c("Deep", "DeepL",
+                              "GT", "OPUS")) +
+  geom_abline(intercept = 0, slope = 1, color="red", linetype="dashed", size=1) +
+  theme_minimal()
+
+df <- read_csv("sentence_level/base_measurements/ar_rarity.csv")
+
+long_df <- df %>% 
+  pivot_longer(
+    cols = seq.int(3,11),
+    names_to = "lang",
+    values_to = "rarity"
+  )
+
+general_df <- long_df[grepl("general", long_df$lang), ]
+
+p4 <- ggplot(general_df, aes(x=ar_general_rarity, y=rarity,
+                       group=lang, color=lang)) +
+  geom_smooth(method="loess", size=1.5) +
+  labs(title="English to Arabic", x="Native Rarity",
+       y="MT Rarity", color="Translation Type") +
+  scale_color_hue(labels=c("Deep", "DeepL",
+                              "GT", "OPUS")) +
+  geom_abline(intercept = 0, slope = 1, color="red", linetype="dashed", size=1) +
+  theme_minimal()
+
+grid.arrange(p1, p2, p3, p4, nrow=2, top=textGrob("Native Rarity vs. MT Rarity",gp=gpar(fontsize=20,font=3)))
+```
 
 ```{r loess_curves_en}
 df <- read_csv("sentence_level/base_measurements/en_rarity.csv")

@@ -1,0 +1,747 @@
+---
+title: "Count Data Linguistic Analysis"
+author: "Dagmar Heintze"
+date: "2024-09-10"
+output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r}
+#Set a Cran monitor
+options(repos = c(CRAN = "https://cran.r-project.org"))
+setwd("/Users/Dagmar Heintze/Desktop/R-Directory")
+install.packages("ggplot2")
+library(ggplot2)
+```
+
+#Ensure long format \# Load the tidyr package for converting to long
+format #load relevant library
+
+```{r}
+library(tidyr)
+```
+
+#########Count Analyses for Arabic########## #Import the data
+
+```{r}
+ar_count_data <- read.csv("/Users/Dagmar Heintze/Downloads/ar_counts.csv")
+View(ar_count_data)
+```
+
+#Transform to long table and select variables \# Lemma counts
+
+```{r}
+df_lemma_long <- pivot_longer(ar_count_data, 
+                              cols = c(ar_lemma_counts,
+                                       en_ar_DEEP_lemma_counts,
+                                       en_ar_DEEPL_lemma_counts,
+                                       en_ar_GOOGLE_lemma_counts,
+                                       en_ar_TRANSFORMERS_lemma_counts),
+                              names_to = "Variable", 
+                              values_to = "Value")
+```
+
+# Create the violin plot
+
+# AR Lemma counts
+
+```{r}
+ggplot(df_lemma_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "AR Lemma Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables \# Verb counts
+
+```{r}
+df_verb_long <- pivot_longer(ar_count_data, 
+                              cols = c(ar_verb_counts,
+                                       en_ar_DEEP_verb_counts,
+                                       en_ar_DEEPL_verb_counts,
+                                       en_ar_GOOGLE_verb_counts,
+                                       en_ar_TRANSFORMERS_verb_counts),
+                              names_to = "Variable", 
+                              values_to = "Value")
+```
+
+# Create the violin plot
+
+# AR Verb counts
+
+```{r}
+ggplot(df_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "AR Verb Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables \# Noun counts
+
+```{r}
+df_noun_long <- pivot_longer(ar_count_data, 
+                              cols = c(ar_noun_counts,
+                                       en_ar_DEEP_noun_counts,
+                                       en_ar_DEEPL_noun_counts,
+                                       en_ar_GOOGLE_noun_counts,
+                                       en_ar_TRANSFORMERS_noun_counts),
+                              names_to = "Variable", 
+                              values_to = "Value")
+```
+
+# Create the violin plot
+
+# AR Noun counts
+
+```{r}
+ggplot(df_noun_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "AR Noun Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+######### End Count Analysis Arabic
+
+######### Count Analyses for English
+
+#Import the data
+
+```{r}
+en_count_data <- read.csv("/Users/Dagmar Heintze/Downloads/en_counts.csv")
+View(en_count_data)
+```
+
+######### Analysis for ES-EN
+
+#Transform to long table and select variables \# Lemma counts ES-EN
+
+```{r}
+df_es_en_lemma_long <- pivot_longer(en_count_data, 
+                              cols = c(en_lemma_counts,
+                                       es_en_DEEP_lemma_counts,
+                                       es_en_DEEPL_lemma_counts,
+                                       es_en_GOOGLE_lemma_counts,
+                                       es_en_TRANSFORMERS_lemma_counts),
+                              names_to = "Variable", 
+                              values_to = "Value")
+```
+
+# Create the violin plot
+
+# ES-EN Lemma counts 
+
+```{r}
+ggplot(df_es_en_lemma_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "ES-EN Lemma Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+# ES-EN Verb counts 
+
+```{r}
+df_es_en_verb_long <- pivot_longer(en_count_data, 
+                             cols = c(en_verb_counts,
+                                      es_en_DEEP_verb_counts,
+                                      es_en_DEEPL_verb_counts,
+                                      es_en_GOOGLE_verb_counts,
+                                      es_en_TRANSFORMERS_verb_counts),
+                             names_to = "Variable", 
+                             values_to = "Value")
+```
+
+# Create the violin plot
+
+# ES-EN Verb counts 
+
+```{r}
+ggplot(df_es_en_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "ES-EN Verb Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables \# Noun counts ES-EN
+
+```{r}
+df_es_en_verb_long <- pivot_longer(en_count_data, 
+                             cols = c(en_noun_counts,
+                                      es_en_DEEP_noun_counts,
+                                      es_en_DEEPL_noun_counts,
+                                      es_en_GOOGLE_noun_counts,
+                                      es_en_TRANSFORMERS_noun_counts),
+                             names_to = "Variable", 
+                             values_to = "Value")
+```
+
+# Create the violin plot
+
+# ES-EN Noun counts 
+
+```{r}
+ggplot(df_es_en_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "ES-EN Noun Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+############ Analysis for AR-EN
+
+#Transform to long table and select variables 
+# AR-EN Lemma counts 
+
+```{r}
+df_ar_en_lemma_long <- pivot_longer(en_count_data, 
+                                    cols = c(en_lemma_counts,
+                                             ar_en_DEEP_lemma_counts,
+                                             ar_en_DEEPL_lemma_counts,
+                                             ar_en_GOOGLE_lemma_counts,
+                                             ar_en_TRANSFORMERS_lemma_counts),
+                                    names_to = "Variable", 
+                                    values_to = "Value")
+```
+
+# Create the violin plot
+
+# AR-EN Lemma counts
+
+```{r}
+ggplot(df_ar_en_lemma_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "AR-EN Lemma Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+# AR-EN Verb counts 
+
+```{r}
+df_ar_en_verb_long <- pivot_longer(en_count_data, 
+                                   cols = c(en_verb_counts,
+                                            ar_en_DEEP_verb_counts,
+                                            ar_en_DEEPL_verb_counts,
+                                            ar_en_GOOGLE_verb_counts,
+                                            ar_en_TRANSFORMERS_verb_counts),
+                                   names_to = "Variable", 
+                                   values_to = "Value")
+```
+
+# Create the violin plot
+
+# AR-EN Verb counts 
+
+```{r}
+ggplot(df_es_en_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "Ar-EN Verb Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+# AR-EN Noun counts 
+
+```{r}
+df_ar_en_verb_long <- pivot_longer(en_count_data, 
+                                   cols = c(en_noun_counts,
+                                            ar_en_DEEP_noun_counts,
+                                            ar_en_DEEPL_noun_counts,
+                                            ar_en_GOOGLE_noun_counts,
+                                            ar_en_TRANSFORMERS_noun_counts),
+                                   names_to = "Variable", 
+                                   values_to = "Value")
+
+```
+
+# Create the violin plot
+
+# AR-EN Noun counts 
+
+```{r}
+ggplot(df_es_en_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "Ar-EN Noun Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+######### End Count Analyses for English
+
+########## Count Analyses for Spanish
+
+#Import the data
+
+```{r}
+es_count_data <- read.csv("/Users/Dagmar Heintze/Downloads/es_counts.csv")
+View(es_count_data)
+```
+
+#Transform to long table and select variables 
+
+# ES Lemma counts
+
+```{r}
+df_es_lemma_long <- pivot_longer(es_count_data, 
+                              cols = c(es_lemma_counts,
+                                       en_es_DEEP_lemma_counts,
+                                       en_es_DEEPL_lemma_counts,
+                                       en_es_GOOGLE_lemma_counts,
+                                       en_es_TRANSFORMERS_lemma_counts),
+                              names_to = "Variable", 
+                              values_to = "Value")
+```
+
+# Create the violin plot
+
+# ES Lemma counts
+
+```{r}
+ggplot(df_es_lemma_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "ES Lemma Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+# ES Verb counts
+
+```{r}
+df_es_verb_long <- pivot_longer(es_count_data, 
+                             cols = c(es_verb_counts,
+                                      en_es_DEEP_verb_counts,
+                                      en_es_DEEPL_verb_counts,
+                                      en_es_GOOGLE_verb_counts,
+                                      en_es_TRANSFORMERS_verb_counts),
+                             names_to = "Variable", 
+                             values_to = "Value")
+```
+
+# Create the violin plot
+
+# ES Verb counts
+
+```{r}
+ggplot(df_es_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "ES Verb Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+# ES Noun counts
+
+```{r}
+df_es_noun_long <- pivot_longer(es_count_data, 
+                             cols = c(es_noun_counts,
+                                      en_es_DEEP_noun_counts,
+                                      en_es_DEEPL_noun_counts,
+                                      en_es_GOOGLE_noun_counts,
+                                      en_es_TRANSFORMERS_noun_counts),
+                             names_to = "Variable", 
+                             values_to = "Value")
+```
+
+# Create the violin plot
+
+# ES Noun counts
+
+```{r}
+ggplot(df_es_noun_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "ES Noun Counts", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+######### End Count Analysis Spanish
+
+######### Begin Count Difference Analysis from Arabic
+
+#Import the data
+
+```{r}
+ar_diff_data <- read.csv("/Users/Dagmar Heintze/Downloads/from_ar_counts_difference.csv")
+View(ar_diff_data)
+```
+
+#Transform to long table and select variables 
+# AR-EN Lemma difference 
+
+```{r}
+df_ar_diff_lemma_long <- pivot_longer(ar_diff_data, 
+                                    cols = c(ar_en_DEEP_difference_lemma_counts,
+                                             ar_en_DEEPL_difference_lemma_counts,
+                                             ar_en_GOOGLE_difference_lemma_counts,
+                                          ar_en_TRANSFORMERS_difference_lemma_counts),
+                                    names_to = "Variable", 
+                                    values_to = "Value")
+```
+
+# Create the violin plot
+
+# AR-EN Lemma counts differnce 
+
+```{r}
+ggplot(df_ar_diff_lemma_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "AR-EN Lemma Counts Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+# AR-EN Verb counts Difference
+
+
+```{r}
+df_ar_diff_verb_long <- pivot_longer(ar_diff_data, 
+                                   cols = c(
+                                            ar_en_DEEP_difference_verb_counts,
+                                            ar_en_DEEPL_difference_verb_counts,
+                                            ar_en_GOOGLE_difference_verb_counts,
+                                            ar_en_TRANSFORMERS_difference_verb_counts),
+                                   names_to = "Variable", 
+                                   values_to = "Value")
+```
+
+# Create the violin plot
+
+# AR-EN Verb counts Difference 
+
+```{r}
+ggplot(df_ar_diff_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "Ar-EN Verb Count Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+
+# AR-EN Noun counts Difference
+
+
+```{r}
+df_ar_diff_verb_long <- pivot_longer(ar_diff_data, 
+                                   cols = c(
+                                            ar_en_DEEP_difference_noun_counts,
+                                            ar_en_DEEPL_difference_noun_counts,
+                                            ar_en_GOOGLE_difference_noun_counts,
+                                            ar_en_TRANSFORMERS_difference_noun_counts),
+                                   names_to = "Variable", 
+                                   values_to = "Value")
+
+```
+
+# Create the violin plot
+
+# AR-EN Noun counts Difference
+
+```{r}
+ggplot(df_ar_diff_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "Ar-EN Noun Counts Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c( "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+######### End Count Difference Analysis Arabic ##############
+
+########## Begin Count Difference Analysis English ##########
+
+#Import the data
+
+```{r}
+en_diff_data <- read.csv("/Users/Dagmar Heintze/Downloads/en_counts_difference.csv")
+View(en_diff_data)
+```
+
+#Transform to long table and select variables 
+# ES-EN Lemma counts Difference
+
+```{r}
+df_es_en_diff_lemma_long <- pivot_longer(en_diff_data, 
+                              cols = c(
+                                       es_en_DEEP_difference_lemma_counts,
+                                       es_en_DEEPL_difference_lemma_counts,
+                                       es_en_GOOGLE_difference_lemma_counts,
+                                       es_en_TRANSFORMERS_difference_lemma_counts),
+                              names_to = "Variable", 
+                              values_to = "Value")
+```
+
+# Create the violin plot
+
+# ES-EN Lemma counts Difference
+
+```{r}
+ggplot(df_es_en_diff_lemma_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "ES-EN Lemma Counts Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+# ES-EN Verb counts Difference
+
+```{r}
+df_es_en_diff_verb_long <- pivot_longer(en_diff_data, 
+                             cols = c(
+                                      es_en_DEEP_difference_verb_counts,
+                                      es_en_DEEPL_difference_verb_counts,
+                                      es_en_GOOGLE_difference_verb_counts,
+                                      es_en_TRANSFORMERS_difference_verb_counts),
+                             names_to = "Variable", 
+                             values_to = "Value")
+```
+
+# Create the violin plot
+
+# ES-EN Verb counts difference
+
+```{r}
+ggplot(df_es_en_diff_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "ES-EN Verb Counts Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+# ES-EN Noun counts difference
+
+```{r}
+df_es_en_diff_noun_long <- pivot_longer(en_diff_data, 
+                             cols = c(
+                                      es_en_DEEP_difference_noun_counts,
+                                      es_en_DEEPL_difference_noun_counts,
+                                      es_en_GOOGLE_difference_noun_counts,
+                                      es_en_TRANSFORMERS_difference_noun_counts),
+                             names_to = "Variable", 
+                             values_to = "Value")
+```
+
+# Create the violin plot
+
+# ES-EN Noun counts difference
+
+```{r}
+ggplot(df_es_en_diff_noun_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "ES-EN Noun Counts Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+######### End ES-EN Count Difference Analysis
+
+######### Beginning AR-EN Count Difference Analysis
+
+#Transform to long table and select variables 
+# AR-EN Lemma counts Difference
+
+```{r}
+df_ar_en_diff_lemma_long <- pivot_longer(en_diff_data, 
+                              cols = c(
+                                       ar_en_DEEP_difference_lemma_counts,
+                                       ar_en_DEEPL_difference_lemma_counts,
+                                       ar_en_GOOGLE_difference_lemma_counts,
+                                       ar_en_TRANSFORMERS_difference_lemma_counts),
+                              names_to = "Variable", 
+                              values_to = "Value")
+```
+
+# Create the violin plot
+
+# AR-EN Lemma counts Difference
+
+```{r}
+ggplot(df_ar_en_diff_lemma_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "AR-EN Lemma Counts Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+# AR-EN Verb counts difference
+
+```{r}
+df_ar_en_diff_verb_long <- pivot_longer(en_diff_data, 
+                             cols = c(
+                                      ar_en_DEEP_difference_verb_counts,
+                                      ar_en_DEEPL_difference_verb_counts,
+                                      ar_en_GOOGLE_difference_verb_counts,
+                                      ar_en_TRANSFORMERS_difference_verb_counts),
+                             names_to = "Variable", 
+                             values_to = "Value")
+```
+
+# Create the violin plot
+
+# AR-EN Verb counts difference
+
+```{r}
+ggplot(df_ar_en_diff_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "Ar-EN Verb Counts Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+# AR-EN Noun counts Difference
+
+```{r}
+df_ar_en_diff_noun_long <- pivot_longer(en_diff_data, 
+                             cols = c(
+                                      ar_en_DEEP_difference_noun_counts,
+                                      ar_en_DEEPL_difference_noun_counts,
+                                      ar_en_GOOGLE_difference_noun_counts,
+                                      ar_en_TRANSFORMERS_difference_noun_counts),
+                             names_to = "Variable", 
+                             values_to = "Value")
+```
+
+# Create the violin plot
+
+# AR-EN Noun counts Difference
+
+```{r}
+ggplot(df_ar_en_diff_noun_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "AR-EN Noun Counts Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("Gold Standard", "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+######### End AR-EN Count Difference Analysis #############
+
+######### Begin Count Difference Analysis from Spanish ##########
+
+#Import the data
+
+```{r}
+es_diff_data <- read.csv("/Users/Dagmar Heintze/Downloads/es_counts_difference.csv")
+View(es_diff_data)
+```
+
+#Transform to long table and select variables 
+
+# EN-ES Lemma count Difference 
+
+```{r}
+df_es_diff_lemma_long <- pivot_longer(es_diff_data, 
+                                    cols = c(en_es_DEEP_difference_lemma_counts,
+                                             en_es_DEEPL_difference_lemma_counts,
+                                             en_es_GOOGLE_difference_lemma_counts,
+                                          en_es_TRANSFORMERS_difference_lemma_counts),
+                                    names_to = "Variable", 
+                                    values_to = "Value")
+```
+
+# Create the violin plot
+
+# EN-ES Lemma counts differnce 
+
+```{r}
+ggplot(df_es_diff_lemma_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "EN-ES Lemma Counts Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+
+# EN-ES Verb counts Difference
+
+
+```{r}
+df_es_diff_verb_long <- pivot_longer(es_diff_data, 
+                                   cols = c(
+                                            en_es_DEEP_difference_verb_counts,
+                                            en_es_DEEPL_difference_verb_counts,
+                                            en_es_GOOGLE_difference_verb_counts,
+                                            en_es_TRANSFORMERS_difference_verb_counts),
+                                   names_to = "Variable", 
+                                   values_to = "Value")
+```
+
+# Create the violin plot
+
+# EN-ES Verb counts Difference 
+
+```{r}
+ggplot(df_es_diff_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "EN-ES Verb Count Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c("DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+#Transform to long table and select variables 
+# EN-ES Noun counts Difference
+
+```{r}
+df_es_diff_verb_long <- pivot_longer(es_diff_data, 
+                                   cols = c(
+                                            en_es_DEEP_difference_noun_counts,
+                                            en_es_DEEPL_difference_noun_counts,
+                                            en_es_GOOGLE_difference_noun_counts,
+                                            en_es_TRANSFORMERS_difference_noun_counts),
+                                   names_to = "Variable", 
+                                   values_to = "Value")
+
+```
+
+# Create the violin plot
+
+# EN-ES Noun counts Difference
+
+```{r}
+ggplot(df_es_diff_verb_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin(trim = FALSE, color = "black") +
+  theme_minimal() +
+  labs(title = "EN-ES Noun Counts Difference", y = "Value") +
+  theme(legend.position = "none") +  
+  scale_x_discrete(labels = c( "DEEP", "DEEPL", "GOOGLE", "TRANSFORMERS"))  # Custom x-axis labels
+```
+
+######### End Count Difference Analysis Spanish #########
