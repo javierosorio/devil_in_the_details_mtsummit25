@@ -6,14 +6,18 @@ Conflict scholars increasingly rely on computational tools to track violence and
 
 # AUTHORS
 
+Javier Osorio, Afraa Alshammari, Naiff Alatrush, Dagmar Heintze, Amber Converse, Sultan Alsarra, Mahrusa Billah, Latifur Khan, Patrick T. Brandt, Vito D'Orazio
+
+
+**Citation**
+
 xxx
 
 
-# CITATION
+**Funding**
 
-xxx
+This project was possible thanks to the generous funding of the National Science Foundation to the "Frameworks: Infrastructure For Political And Social Event Data using Machine Learning" reseearch project [award 2311142](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2311142&HistoricalAwards=false).
 
----
 
 
 ---
@@ -22,15 +26,8 @@ xxx
 
 xxx
 
----
 
 
----
 
-# FUNDING 
-
-xxx
-
----
 
 
