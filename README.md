@@ -27,9 +27,9 @@ This project was possible thanks to the generous funding of the National Science
 This repository contains the following folders:
 * **data**: contains the different data bases used in the study.
   * **linguistic_analysis**:
-     * **corpus_level**: Amber and Dagmar, please fill this.
-     * **scripts**: Amber and Dagmar, please put all your scripts here and use nomenclature to order them.
-     * **sentence_level**: Amber and Dagmar, please fill this.
+     * **corpus_level**: Amber and Dagmar, is this the same as in 3_rarity?
+     * **scripts**: Amber and Dagmar, is this the same as in 3_rarity?
+     * **sentence_level**: Amber and Dagmar, is this the same as in 3_rarity?
   * **master_file**: Contains the merged results of the text, the machine translations, and predictions << we need to change the name of this folder. It is confusing. I would put it under the data folder.
   * **prediction_results**. << move this to folder 4_predictions.
   * **quality**: contains the quality scores from each assessment metric for each machine-translated oputput. 
