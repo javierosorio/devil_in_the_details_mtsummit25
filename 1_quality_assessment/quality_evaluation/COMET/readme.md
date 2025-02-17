@@ -10,7 +10,7 @@ The script dynamically loads input files, processes them using pre-trained COMET
 
 Ensure you have the necessary dependencies installed before running the script.
 
-### Installation
+## Installation
 
 Install the required dependencies using pip:
 
@@ -70,13 +70,13 @@ The script logs all progress in comet_evaluation.log.
 
     Errors and skipped models are recorded in the log file.
 
-Notes
+# Notes
 
     Ensure your input_data folder contains properly formatted CSV files.
     The script will process all files in input_data automatically.
     If a model fails to load, it will be skipped and logged.
 
-Contact
+# Contact
 
 For questions or issues, please open an issue on the repository.
 
