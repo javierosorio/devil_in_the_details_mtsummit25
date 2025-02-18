@@ -43,15 +43,15 @@ This repository contains the following folders:
   * **graphs**: stores the graphs derived from the analysis.
 * **2_model_performance**
   * **scripts**: includes the R scripts used to analyze the ConfliBERT performance.
-  * **graphs**: stores teh graphs derived from the analysis.
+  * **graphs**: stores the graphs derived from the quality analysis.
 * **3_rarity**
   * **corpus_level**: please describe.
   * **scripts**: please describe.
   * **sentence_level**: please describe.
 * **4_prediction**
-  * **x**
-  * **x**
-  * **x**
+  * **x**: please describe.
+  * **x**: please describe.
+  * **x**: please describe.
 
 
 
