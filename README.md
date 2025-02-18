@@ -6,7 +6,7 @@ Conflict scholars increasingly rely on computational tools to track violence and
 
 # AUTHORS
 
-Javier Osorio, Afraa Alshammari, Naiff Alatrush, Dagmar Heintze, Amber Converse, Sultan Alsarra, Mahrusa Billah, Latifur Khan, Patrick T. Brandt, Vito D'Orazio
+Javier Osorio, Afraa Alshammari, Naiff Alatrush, Dagmar Heintze, Amber Converse, Sultan Alsarra, Latifur Khan, Patrick T. Brandt, Vito D'Orazio
 
 
 **Citation:**
