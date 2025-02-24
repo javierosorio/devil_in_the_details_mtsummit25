@@ -1,4 +1,6 @@
 # Translation Quality Evaluation Script
+**COMET** has its own dedicated README file located inside its respective folder. We have separated it into its own file to avoid making this README too lengthy. You can find detailed information about how to use COMET in its folder’s README. This allows you to focus on the other quality metrics without getting lost in lengthy documentation.
+
 This script assesses the translation quality of 4 Machine Translation (MT) tools: Deep, DeepL, Google API, and OPUS Transformers by comparing machine-translated sentences to a reference file using the following metrics: BLEU, SacreBLEU, METEOR, and BERTScore. and outputs results into 6 specific CSV files and one PDF report containing plots and regression analysis. The script supports multiple language options, in this script, Arabic is the example language.
 ### Language Options
 This script evaluates translations for different languages noting while using the BERTScore metric (which requires specifying the target language). As an example for the project explanation, Arabic is used as the evaluation language.
@@ -92,4 +94,3 @@ translated_file = '/path/to/translated_file.tsv'
 Copy code:
 python <script_name.py>
 4.	After running the script, you will find the output files in the same directory as the script. These include the six CSV files with metric scores, sentence differences, and translation statistics, as well as the PDF report with visualizations.
-
