@@ -38,6 +38,8 @@ o	Tokenizer and Model: Uses MarianTokenizer and MarianMTModel for tokenization a
 o	Path: /home/user/en_annotations_binary_complete.tsv  
 ### •	Output File:  
 o	Path: /home/user/Transformers_En_ES_complete.tsv  
+**Note**
+A fourth tool used in our research is **DeepL**. Unlike other tools in this repository, DeepL did not require any scripting for our work. We utilized DeepL through its graphical user interface (GUI), meaning no scripts were necessary for its use. For more information about how to interact with DeepL, please refer to the official DeepL website or documentation.
 ________________________________________
 ### To Run Each Script
 ### 1. Running the Google API Translation Script
