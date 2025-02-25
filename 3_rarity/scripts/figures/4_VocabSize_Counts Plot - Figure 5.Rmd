@@ -1,0 +1,54 @@
+---
+title: "Vocabulary count change plot - Figure 5"
+author: "Dagmar Heintze"
+date: "2024-09-15"
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r}
+library(ggplot2)
+df <- data.frame(type=c("Native", "Deep", "DeepL", "GT", "OPUS",
+                         "Native", "Deep", "DeepL", "GT", "OPUS",
+                         "Native", "Deep", "DeepL", "GT", "OPUS",
+                         "Native", "Deep", "DeepL", "GT", "OPUS"),
+                 lang=c("ES to EN", "ES to EN", "ES to EN", "ES to EN", "ES to EN",
+                        "AR to EN", "AR to EN", "AR to EN", "AR to EN", "AR to EN",
+                        "EN to ES", "EN to ES", "EN to ES", "EN to ES", "EN to ES",
+                        "EN to AR", "EN to AR", "EN to AR", "EN to AR", "EN to AR"),
+                 vocab_size=c(15755, 14780, 15035, 15264, 14643, 15755, 14729, 15210, 14870, 13735, 20373, 19754, 20161, 20043, 19078, 38267, 33058, 33437, 32858, 33171))
+
+
+# Create a new column to differentiate Native from MT Tools for separate legend categories
+df$legend_type <- ifelse(df$type == "Native", "Native", "MT Tool")
+
+# Convert the 'type' column into a factor with 'Native' first
+df$type <- factor(df$type, levels = c("Native", "Deep", "DeepL", "GT", "OPUS"))
+
+# Plot with 'Native' appearing first in the order
+ggplot(df, aes(x = lang, y = vocab_size, fill = type)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) + 
+  labs(title = "Vocabulary Size Comparison", 
+       x = "Language Pair", 
+       y = "Vocabulary Size",
+       fill = "MT Tool") +
+  scale_fill_manual(
+    values = c("Native" = "red", "Deep" = "green", "DeepL" = "orange", 
+               "GT" = "skyblue", "OPUS" = "royalblue"),
+    breaks = c("Native", "Deep", "DeepL", "GT", "OPUS"),
+    labels = c("Native", "Deep", "DeepL", "GT", "OPUS")
+  ) +  
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 22, face = "bold"),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  
+    legend.title = element_text(size = 20, face = "bold"), 
+    legend.text = element_text(size = 18)  
+  )
+
+```
+
+
+
