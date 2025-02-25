@@ -1,0 +1,657 @@
+---
+title: "Violin Plots Nouns, verbs, lemmas - Figures 10 -14, Appendix"
+author: "Dagmar Heintze"
+date: "2025-02-24"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+################################# Noun counts into English ##########################
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+data_en <- read.csv('/Users/Dagmar Heintze/Downloads/en_counts (1).csv')
+
+# Reshape the data to a long format nouns ES-EN
+noun_data_long_en <- data_en %>%
+  select(en_noun_counts, es_en_DEEP_noun_counts, es_en_DEEPL_noun_counts, 
+         es_en_GOOGLE_noun_counts, es_en_TRANSFORMERS_noun_counts) %>%
+  pivot_longer(
+    cols = everything(), 
+    names_to = "tool",
+    values_to = "noun_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "es_en_DEEP_noun_counts" ~ "Es to EN",
+      tool == "es_en_DEEPL_noun_counts" ~ "ES to EN",
+      tool == "es_en_GOOGLE_noun_counts" ~ "ES to EN",
+      tool == "es_en_TRANSFORMERS_noun_counts" ~ "ES to EN",
+      tool == "en_noun_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "es_en_DEEP_noun_counts" ~ "Deep",
+    tool == "es_en_DEEPL_noun_counts" ~ "DeepL",
+    tool == "es_en_GOOGLE_noun_counts" ~ "GT",
+    tool == "es_en_TRANSFORMERS_noun_counts" ~ "OPUS",
+    tool == "en_noun_counts" ~ "Native", 
+    TRUE ~ tool
+  ))
+
+# Create the violin plot for noun counts across tools ES-EN
+ggplot(noun_data_long_en, aes(x = tool, y = noun_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Noun Counts Across Tools ES-EN",
+    x = "",
+    y = "Noun Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none",
+  ))
+
+###########################################################################
+
+# Reshape the data to a long format nouns AR-EN
+noun_data_long_en <- data_en %>%
+  select(en_noun_counts, ar_en_DEEP_noun_counts, ar_en_DEEPL_noun_counts, 
+         ar_en_GOOGLE_noun_counts, ar_en_TRANSFORMERS_noun_counts) %>%
+  pivot_longer(
+    cols = everything(), 
+    names_to = "tool",
+    values_to = "noun_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "ar_en_DEEP_noun_counts" ~ "AR to EN",
+      tool == "ar_en_DEEPL_noun_counts" ~ "AR to EN",
+      tool == "ar_en_GOOGLE_noun_counts" ~ "AR to EN",
+      tool == "ar_en_TRANSFORMERS_noun_counts" ~ "AR to EN",
+      tool == "ar_noun_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "ar_en_DEEP_noun_counts" ~ "Deep",
+    tool == "ar_en_DEEPL_noun_counts" ~ "DeepL",
+    tool == "ar_en_GOOGLE_noun_counts" ~ "GT",
+    tool == "ar_en_TRANSFORMERS_noun_counts" ~ "OPUS",
+    tool == "en_noun_counts" ~ "Native", 
+    TRUE ~ tool
+  ))
+
+# Create the violin plot for noun countrs across tolls AR-EN
+ggplot(noun_data_long_en, aes(x = tool, y = noun_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Noun Counts Across Tools AR-EN",
+    x = "",
+    y = "Noun Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none", 
+  ))
+
+```
+
+
+```{r}
+############################# Noun counts into Spanish #####################################
+
+data_es <- read.csv('/Users/Dagmar Heintze/Downloads/es_counts (1).csv')
+
+# Reshape the data to a long format nouns for Spanish
+noun_data_long_es <- data_es %>%
+  select(es_noun_counts, en_es_DEEP_noun_counts, en_es_DEEPL_noun_counts, 
+         en_es_GOOGLE_noun_counts, en_es_TRANSFORMERS_noun_counts) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "tool",
+    values_to = "noun_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "en_es_DEEP_noun_counts" ~ "EN to ES",
+      tool == "en_es_DEEPL_noun_counts" ~ "EN to ES",
+      tool == "en_es_GOOGLE_noun_counts" ~ "EN to ES",
+      tool == "en_es_TRANSFORMERS_noun_counts" ~ "EN to ES",
+      tool == "es_noun_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "en_es_DEEP_noun_counts" ~ "Deep",
+    tool == "en_es_DEEPL_noun_counts" ~ "DeepL",
+    tool == "en_es_GOOGLE_noun_counts" ~ "GT",
+    tool == "en_es_TRANSFORMERS_noun_counts" ~ "OPUS",
+    tool == "es_noun_counts" ~ "Native", 
+    TRUE ~ tool
+  ))
+
+# Create the violin plot for noun counts across tools EN-ES
+ggplot(noun_data_long_es, aes(x = tool, y = noun_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Noun Counts Across Tools EN-ES",
+    x = "",
+    y = "Noun Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none", 
+  ))
+```
+
+
+```{r}
+#################################### Noun counts into Arabic ########################################
+
+data_ar <- read.csv('/Users/Dagmar Heintze/Downloads/ar_counts (1).csv')
+
+# Reshape the data to a long format nouns for Arabic
+noun_data_long_ar <- data_ar %>%
+  select(ar_noun_counts, en_ar_DEEP_noun_counts, en_ar_DEEPL_noun_counts, 
+         en_ar_GOOGLE_noun_counts, en_ar_TRANSFORMERS_noun_counts) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "tool",
+    values_to = "noun_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "en_ar_DEEP_noun_counts" ~ "EN to AR",
+      tool == "en_ar_DEEPL_noun_counts" ~ "EN to AR",
+      tool == "en_ar_GOOGLE_noun_counts" ~ "EN to AR",
+      tool == "en_ar_TRANSFORMERS_noun_counts" ~ "EN to AR",
+      tool == "ar_noun_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "en_ar_DEEP_noun_counts" ~ "Deep",
+    tool == "en_ar_DEEPL_noun_counts" ~ "DeepL",
+    tool == "en_ar_GOOGLE_noun_counts" ~ "GT",
+    tool == "en_ar_TRANSFORMERS_noun_counts" ~ "OPUS",
+    tool == "ar_noun_counts" ~ "Native",
+    TRUE ~ tool
+  ))
+
+# Create the violin plot for noun counts across all tools EN-AR
+ggplot(noun_data_long_ar, aes(x = tool, y = noun_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Noun Counts Across Tools EN-AR",
+    x = "",
+    y = "Noun Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none", 
+  ))
+```
+
+
+```{r}
+########################## Verb counts into English ######################################
+
+# Reshape the data to a long format verbs ES-EN
+verb_data_long_en <- data_en %>%
+  select(en_verb_counts, es_en_DEEP_verb_counts, es_en_DEEPL_verb_counts, 
+         es_en_GOOGLE_verb_counts, es_en_TRANSFORMERS_verb_counts) %>%
+  pivot_longer(
+    cols = everything(), 
+    names_to = "tool",
+    values_to = "verb_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "es_en_DEEP_verb_counts" ~ "Es to EN",
+      tool == "es_en_DEEPL_verb_counts" ~ "ES to EN",
+      tool == "es_en_GOOGLE_verb_counts" ~ "ES to EN",
+      tool == "es_en_TRANSFORMERS_verb_counts" ~ "ES to EN",
+      tool == "en_verb_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "es_en_DEEP_verb_counts" ~ "Deep",
+    tool == "es_en_DEEPL_verb_counts" ~ "DeepL",
+    tool == "es_en_GOOGLE_verb_counts" ~ "GT",
+    tool == "es_en_TRANSFORMERS_verb_counts" ~ "OPUS",
+    tool == "en_verb_counts" ~ "Native",
+    TRUE ~ tool
+  ))
+
+# Create the violin plot for verbs across all tools into ES - EN
+ggplot(verb_data_long_en, aes(x = tool, y = verb_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Verb Counts Across Tools ES-EN",
+    x = "",
+    y = "Verb Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none", 
+  ))
+
+###########################################################################
+
+# Reshape the data to a long format nouns AR-EN
+verb_data_long_en <- data_en %>%
+  select(en_verb_counts, ar_en_DEEP_verb_counts, ar_en_DEEPL_verb_counts, 
+         ar_en_GOOGLE_verb_counts, ar_en_TRANSFORMERS_verb_counts) %>%
+  pivot_longer(
+    cols = everything(), 
+    names_to = "tool",
+    values_to = "verb_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "ar_en_DEEP_verb_counts" ~ "AR to EN",
+      tool == "ar_en_DEEPL_verb_counts" ~ "AR to EN",
+      tool == "ar_en_GOOGLE_verb_counts" ~ "AR to EN",
+      tool == "ar_en_TRANSFORMERS_verb_counts" ~ "AR to EN",
+      tool == "ar_verb_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "ar_en_DEEP_verb_counts" ~ "Deep",
+    tool == "ar_en_DEEPL_verb_counts" ~ "DeepL",
+    tool == "ar_en_GOOGLE_verb_counts" ~ "GT",
+    tool == "ar_en_TRANSFORMERS_verb_counts" ~ "OPUS",
+    tool == "en_verb_counts" ~ "Native", 
+    TRUE ~ tool
+  ))
+
+# Create the violin plot for verbs across all tools AR-EN
+ggplot(verb_data_long_en, aes(x = tool, y = verb_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Verb Counts Across Tools AR-EN",
+    x = "",
+    y = "Verb Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none", 
+  ))
+```
+
+
+```{r}
+################################### Verb counts into Spanish ################################
+
+# Reshape the data to a long format verbs for Spanish
+verb_data_long_es <- data_es %>%
+  select(es_verb_counts, en_es_DEEP_verb_counts, en_es_DEEPL_verb_counts, 
+         en_es_GOOGLE_verb_counts, en_es_TRANSFORMERS_verb_counts) %>%
+  pivot_longer(
+    cols = everything(), 
+    names_to = "tool",
+    values_to = "verb_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "en_es_DEEP_verb_counts" ~ "EN to ES",
+      tool == "en_es_DEEPL_verb_counts" ~ "EN to ES",
+      tool == "en_es_GOOGLE_verb_counts" ~ "EN to ES",
+      tool == "en_es_TRANSFORMERS_verb_counts" ~ "EN to ES",
+      tool == "es_verb_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "en_es_DEEP_verb_counts" ~ "Deep",
+    tool == "en_es_DEEPL_verb_counts" ~ "DeepL",
+    tool == "en_es_GOOGLE_verb_counts" ~ "GT",
+    tool == "en_es_TRANSFORMERS_verb_counts" ~ "OPUS",
+    tool == "es_verb_counts" ~ "Native", 
+    TRUE ~ tool
+  ))
+
+# Create the violin plot for verbs across all tools EN-ES
+ggplot(verb_data_long_es, aes(x = tool, y = verb_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Verb Counts Across Tools EN-ES",
+    x = "",
+    y = "Verb Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none",
+  ))
+```
+
+
+```{r}
+
+###################### Verb counts into Arabic #################################################
+
+# Reshape the data to a long format nouns for Arabic
+verb_data_long_ar <- data_ar %>%
+  select(ar_verb_counts, en_ar_DEEP_verb_counts, en_ar_DEEPL_verb_counts, 
+         en_ar_GOOGLE_verb_counts, en_ar_TRANSFORMERS_verb_counts) %>%
+  pivot_longer(
+    cols = everything(), 
+    names_to = "tool",
+    values_to = "verb_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "en_ar_DEEP_verb_counts" ~ "EN to AR",
+      tool == "en_ar_DEEPL_verb_counts" ~ "EN to AR",
+      tool == "en_ar_GOOGLE_verb_counts" ~ "EN to AR",
+      tool == "en_ar_TRANSFORMERS_verb_counts" ~ "EN to AR",
+      tool == "ar_verb_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "en_ar_DEEP_verb_counts" ~ "Deep",
+    tool == "en_ar_DEEPL_verb_counts" ~ "DeepL",
+    tool == "en_ar_GOOGLE_verb_counts" ~ "GT",
+    tool == "en_ar_TRANSFORMERS_verb_counts" ~ "OPUS",
+    tool == "ar_verb_counts" ~ "Native", 
+    TRUE ~ tool
+  ))
+
+# Create the violin plot across all tools EN-AR
+ggplot(verb_data_long_ar, aes(x = tool, y = verb_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Verb Counts Across Tools EN-AR",
+    x = "",
+    y = "Verb Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1), 
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none", 
+  ))
+```
+
+
+```{r}
+########################### Lemma counts into English ############################################
+
+# Reshape the data to a long format lemmas ES-EN
+lemma_data_long_en <- data_en %>%
+  select(en_lemma_counts, es_en_DEEP_lemma_counts, es_en_DEEPL_lemma_counts,
+         es_en_GOOGLE_lemma_counts, es_en_TRANSFORMERS_lemma_counts) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "tool",
+    values_to = "lemma_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "es_en_DEEP_lemma_counts" ~ "Es to EN",
+      tool == "es_en_DEEPL_lemma_counts" ~ "ES to EN",
+      tool == "es_en_GOOGLE_lemma_counts" ~ "ES to EN",
+      tool == "es_en_TRANSFORMERS_lemma_counts" ~ "ES to EN",
+      tool == "en_lemma_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "es_en_DEEP_lemma_counts" ~ "Deep",
+    tool == "es_en_DEEPL_lemma_counts" ~ "DeepL",
+    tool == "es_en_GOOGLE_lemma_counts" ~ "GT",
+    tool == "es_en_TRANSFORMERS_lemma_counts" ~ "OPUS",
+    tool == "en_lemma_counts" ~ "Native", 
+    TRUE ~ tool
+  ))
+
+# Create the violin plot of lemma counts across all tools ES-EN
+ggplot(lemma_data_long_en, aes(x = tool, y = lemma_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Lemma Counts Across Tools ES-EN",
+    x = "",
+    y = "Lemma Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1), 
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none", 
+  ))
+
+###########################################################################
+
+# Reshape the data to a long format lemmas AR-EN
+lemma_data_long_en <- data_en %>%
+  select(en_lemma_counts, ar_en_DEEP_lemma_counts, ar_en_DEEPL_lemma_counts,
+         ar_en_GOOGLE_lemma_counts, ar_en_TRANSFORMERS_lemma_counts) %>%
+  pivot_longer(
+    cols = everything(), 
+    names_to = "tool",
+    values_to = "lemma_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "ar_en_DEEP_lemma_counts" ~ "AR to EN",
+      tool == "ar_en_DEEPL_lemma_counts" ~ "AR to EN",
+      tool == "ar_en_GOOGLE_lemma_counts" ~ "AR to EN",
+      tool == "ar_en_TRANSFORMERS_lemma_counts" ~ "AR to EN",
+      tool == "ar_lemma_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "ar_en_DEEP_lemma_counts" ~ "Deep",
+    tool == "ar_en_DEEPL_lemma_counts" ~ "DeepL",
+    tool == "ar_en_GOOGLE_lemma_counts" ~ "GT",
+    tool == "ar_en_TRANSFORMERS_lemma_counts" ~ "OPUS",
+    tool == "en_lemma_counts" ~ "Native", 
+    TRUE ~ tool
+  ))
+
+# Create the violin plot for lemma counts across all tools AR-EN
+ggplot(lemma_data_long_en, aes(x = tool, y = lemma_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Lemma Counts Across Tools AR-EN",
+    x = "",
+    y = "Lemma Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none", 
+  ))
+```
+
+
+```{r}
+
+######################## Lemma ounts into Spanish ###############################################
+
+# Reshape the data to a long format lemmas for Spanish
+lemma_data_long_es <- data_es %>%
+  select(es_lemma_counts, en_es_DEEP_lemma_counts, en_es_DEEPL_lemma_counts,
+         en_es_GOOGLE_lemma_counts, en_es_TRANSFORMERS_lemma_counts) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "tool",
+    values_to = "lemma_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "en_es_DEEP_lemma_counts" ~ "EN to ES",
+      tool == "en_es_DEEPL_lemma_counts" ~ "EN to ES",
+      tool == "en_es_GOOGLE_lemma_counts" ~ "EN to ES",
+      tool == "en_es_TRANSFORMERS_lemma_counts" ~ "EN to ES",
+      tool == "es_lemma_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "en_es_DEEP_lemma_counts" ~ "Deep",
+    tool == "en_es_DEEPL_lemma_counts" ~ "DeepL",
+    tool == "en_es_GOOGLE_lemma_counts" ~ "GT",
+    tool == "en_es_TRANSFORMERS_lemma_counts" ~ "OPUS",
+    tool == "es_lemma_counts" ~ "Native", 
+    TRUE ~ tool
+  ))
+
+# Create the violin plot for lemma counts across all tools EN-ES
+ggplot(lemma_data_long_es, aes(x = tool, y = lemma_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Lemma Counts Across Tools EN-ES",
+    x = "",
+    y = "Lemma Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none", 
+  ))
+```
+
+
+```{r}
+############################## Lemma counts across into Arabic ##################################
+
+# Reshape the data to a long format lemmas for Arabic
+lemma_data_long_ar <- data_ar %>%
+  select(ar_lemma_counts, en_ar_DEEP_lemma_counts, en_ar_DEEPL_lemma_counts,
+         en_ar_GOOGLE_lemma_counts, en_ar_TRANSFORMERS_lemma_counts) %>%
+  pivot_longer(
+    cols = everything(), 
+    names_to = "tool",
+    values_to = "lemma_counts"
+  ) %>%
+  mutate(
+    trans.lang = case_when(
+      tool == "en_ar_DEEP_lemma_counts" ~ "EN to AR",
+      tool == "en_ar_DEEPL_lemma_counts" ~ "EN to AR",
+      tool == "en_ar_GOOGLE_lemma_counts" ~ "EN to AR",
+      tool == "en_ar_TRANSFORMERS_lemma_counts" ~ "EN to AR",
+      tool == "ar_lemma_counts" ~ "Native", 
+      TRUE ~ "Unknown"
+    )
+  ) %>%
+  mutate(tool = case_when(
+    tool == "en_ar_DEEP_lemma_counts" ~ "Deep",
+    tool == "en_ar_DEEPL_lemma_counts" ~ "DeepL",
+    tool == "en_ar_GOOGLE_lemma_counts" ~ "GT",
+    tool == "en_ar_TRANSFORMERS_lemma_counts" ~ "OPUS",
+    tool == "ar_lemma_counts" ~ "Native", 
+    TRUE ~ tool
+  ))
+
+# Create the violin plot of lemma counts across all tools into Arabic 
+ggplot(lemma_data_long_ar, aes(x = tool, y = lemma_counts)) + 
+  geom_violin(fill = "gray80", color = "black", alpha = 0.7) + 
+  stat_summary(fun = "mean", geom = "point", shape = 21, size = 3, fill = "black", color = "white") + 
+  labs(
+    title = "Distribution of Lemma Counts Across Tools EN-AR",
+    x = "",
+    y = "Lemma Counts"
+  ) +
+  theme_light() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 16, face = "bold"),
+    axis.title.y = element_text(size = 16),
+    axis.text.x = element_text(size = 16, angle = 45, hjust = 1),  
+    legend.title = element_text(size = 16, face = "bold") +
+  theme(
+    strip.text = element_text(colour = 'black'),
+    legend.position = "none", 
+  ))
+```
