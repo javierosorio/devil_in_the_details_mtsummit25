@@ -22,7 +22,7 @@ pacman::p_load(here, glue, openxlsx, tidyverse, readxl, dplyr, stringr, stringi,
 
 # Get the data (clean version)
 
-data.diff <- read_excel("data/raw_data/data_master_text_clean.xlsx")  
+data.diff <- read_excel("data/raw_data/data_master_text_clean_2.xlsx")  
 
 
 names(data.diff)
