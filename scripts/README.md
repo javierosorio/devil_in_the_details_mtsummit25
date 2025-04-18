@@ -12,5 +12,5 @@ The scripts contained in this folder replicate the analysis reported in the pape
 * **5_trees_v2.R**: Replicates the dependency trees reported in Table 1. It also replicates the Dependency Distance Mean in Figure 13 and its difference in Figure 14 as reported in Appendix C.
 * **6_regression_v2.R**: Replicates the regression analysis reported in Appendix D.
 * **7_rems_v1.R**: Replicates the Model Fit Loss reported in Figure 7 in the paper, and its corresponding Root Mean Square Error (RMSE) graphs in Appendix E.
-* **10_Violin Plots appendix _ Figures 10 - 12.Rmd**: Generates separate Noun, Lemma, And Word count plots, that were merged as Figures 10, 11, and 12 in Appendix H.
+* **10_Violin Plots appendix _ Figures 10 - 12.Rmd**: Generates separate Noun, Lemma, and Word count plots, that were merged as Figures 10, 11, and 12 in Appendix H.
 
