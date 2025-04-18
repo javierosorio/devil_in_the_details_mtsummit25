@@ -1,0 +1,331 @@
+---
+title: "Rarity Means Plots - Figure 6"
+author: "Dagmar Heintze"
+date: "2025-01-16"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+# Load required libraries
+library(tibble)
+library(ggplot2)
+library(dplyr)
+library(readr)
+
+# Download the data
+download.file(
+  url = "https://github.com/javierosorio/devil_in_the_details_mtsummit25/raw/main/3_rarity/sentence_level/base_measurements/en_rarity.csv",
+  destfile = "en_rarity.csv",
+  mode = "wb"
+)
+
+# Read the CSV file
+df <- read_csv("en_rarity.csv")
+
+# Create a DataFrame for general rarity with p_value column
+general_rarity_en <- tribble(
+  ~lang, ~mean, ~sd, ~median, ~IQR, ~type, ~language, ~p_value,
+  "en_general_rarity", 0.304, 0.161, 0.273, 0.167, "General Rarity", "EN", "Reference",
+  "es_en_DEEP_general_rarity", 0.289, 0.160, 0.258, 0.156, "General Rarity", "EN", "<0.01",
+  "es_en_DEEPL_general_rarity", 0.293, 0.161, 0.269, 0.161, "General Rarity", "EN", "<0.01",
+  "es_en_GOOGLE_general_rarity", 0.292, 0.159, 0.261, 0.156, "General Rarity", "EN", "<0.01",
+  "es_en_TRANSFORMERS_general_rarity", 0.294, 0.161, 0.267, 0.165, "General Rarity", "EN", "<0.01",
+  "ar_en_DEEP_general_rarity", 0.296, 0.163, 0.264, 0.171, "General Rarity", "EN", "<0.01",
+  "ar_en_DEEPL_general_rarity", 0.300, 0.164, 0.273, 0.164, "General Rarity", "EN", "<0.05",
+  "ar_en_GOOGLE_general_rarity", 0.299, 0.163, 0.267, 0.168, "General Rarity", "EN", "<0.1",
+  "ar_en_TRANSFORMERS_general_rarity", 0.292, 0.160, 0.267, 0.161, "General Rarity", "EN", ">0.1"
+)
+
+# Create a DataFrame for domain rarity with p_value column
+genre_rarity_en <- tribble(
+  ~lang, ~mean, ~sd, ~median, ~IQR, ~type, ~language, ~p_value,
+  "en_genre_rarity", 0.0806, 0.113, 0.0462, 0.111, "Domain Rarity", "EN", "Reference",
+  "es_en_DEEP_genre_rarity", 0.0709, 0.109, 0.0357, 0.0952, "Domain Rarity", "EN", "<0.01",
+  "es_en_DEEPL_genre_rarity", 0.0726, 0.108, 0.0377, 0.100, "Domain Rarity", "EN", "<0.01",
+  "es_en_GOOGLE_genre_rarity", 0.0737, 0.110, 0.0392, 0.100, "Domain Rarity", "EN", "<0.01",
+  "es_en_TRANSFORMERS_genre_rarity", 0.0700, 0.109, 0.0345, 0.0909, "Domain Rarity", "EN", "<0.01",
+  "ar_en_DEEP_genre_rarity", 0.0685, 0.107, 0.0345, 0.0909, "Domain Rarity", "EN", "<0.01",
+  "ar_en_DEEPL_genre_rarity", 0.0764, 0.119, 0.0400, 0.100, "Domain Rarity", "EN", "<0.01",
+  "ar_en_GOOGLE_genre_rarity", 0.0700, 0.108, 0.0357, 0.0952, "Domain Rarity", "EN", "<0.01",
+  "ar_en_TRANSFORMERS_genre_rarity", 0.0655, 0.106, 0.0294, 0.0909, "Domain Rarity", "EN", "<0.01"
+)
+
+# General Rarity Plot into English
+ggplot(general_rarity_en, aes(x = mean, y = lang, fill = p_value)) +
+  geom_segment(aes(x = mean - 0.0015, xend = mean + 0.0015, y = lang, yend = lang), 
+               color = "black", size = 1) +
+  geom_point(aes(shape = p_value, fill = p_value), size = 7, color = "black", position = position_dodge(0.9)) +
+  labs(title = "General Rarity Means into English",
+       x = "",
+       y = "",
+       fill = "P-Value",
+       shape = "P-Value") +
+  theme_minimal() +
+  scale_fill_manual(values = c("<0.01" = "black", "<0.05" = "grey50", "<0.1" = "grey90", ">0.1" = "white", "Reference" = "white")) +
+  scale_shape_manual(values = c("<0.01" = 21, "<0.05" = 21, "<0.1" = 21, ">0.1" = 21, "Reference" = 23)) +
+  scale_y_discrete(labels = c(
+    "es_en_TRANSFORMERS_general_rarity" = "ES-EN OPUS",
+    "es_en_GOOGLE_general_rarity" = "ES-EN GT",
+    "es_en_DEEPL_general_rarity" = "ES-EN DeepL",
+    "es_en_DEEP_general_rarity" = "ES-EN Deep",
+    "en_general_rarity" = "NST",
+    "ar_en_TRANSFORMERS_general_rarity" = "AR-EN OPUS",
+    "ar_en_GOOGLE_general_rarity" = "AR-EN GT",
+    "ar_en_DEEPL_general_rarity" = "AR-EN DeepL",
+    "ar_en_DEEP_general_rarity" = "AR-EN Deep"
+  )) +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 22),
+    axis.title.x = element_text(size = 10),
+    axis.title.y = element_text(size = 10),
+    axis.text.x = element_text(size = 18),
+    axis.text.y = element_text(size = 20)
+  )
+
+
+# Genre Rarity Plot into English
+ggplot(genre_rarity_en, aes(x = mean, y = lang, fill = p_value)) +
+  geom_segment(aes(x = mean - 0.0015, xend = mean + 0.0015, y = lang, yend = lang), 
+               color = "black", size = 1) + 
+  geom_point(aes(shape = p_value, fill = p_value), size = 7, color = "black", position = position_dodge(0.9)) + 
+  labs(title = "Domain Rarity Means into English",
+       x = "",
+       y = "",
+       fill = "P-Value",
+       shape = "P-Value") +
+  theme_minimal() +
+  scale_fill_manual(values = c("<0.01" = "black", "<0.05" = "grey50", "<0.1" = "grey90", ">0.1" = "white", "Reference" = "white")) +
+  scale_shape_manual(values = c("<0.01" = 21, "<0.05" = 21, "<0.1" = 21, ">0.1" = 21, "Reference" = 23))+
+  scale_y_discrete(labels = c(
+    "es_en_TRANSFORMERS_genre_rarity" = "ES-EN OPUS",
+    "es_en_GOOGLE_genre_rarity" = "ES-EN GT",
+    "es_en_DEEPL_genre_rarity" = "ES-EN DeepL",
+    "es_en_DEEP_genre_rarity" = "ES-EN Deep",
+    "en_genre_rarity" = "NST",
+    "ar_en_TRANSFORMERS_genre_rarity" = "AR-EN OPUS",
+    "ar_en_GOOGLE_genre_rarity" = "AR-EN GT",
+    "ar_en_DEEPL_genre_rarity" = "AR-EN DeepL",
+    "ar_en_DEEP_genre_rarity" = "AR-EN Deep"
+  )) +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 22),
+    axis.title.x = element_text(size = 10),
+    axis.title.y = element_text(size = 10),
+    axis.text.x = element_text(size = 18),
+    axis.text.y = element_text(size = 20)
+  )
+```
+
+```{r}
+# Create a DataFrame for general rarity Spanish
+general_rarity_es <- tribble(
+  ~lang, ~mean, ~sd, ~median, ~IQR,  ~type, ~language,
+  "es_general_rarity", 0.316, 0.144, 0.288, 0.133, "General Rarity", "ES",
+  "en_es_DEEP_general_rarity", 0.323, 0.147, 0.3, 0.139, "General Rarity", "ES",
+  "en_es_DEEPL_general_rarity", 0.325, 0.149, 0.303, 0.138,"General Rarity", "ES",
+  "en_es_GOOGLE_general_rarity", 0.324, 0.146, 0.3, 0.137,"General Rarity", "ES",
+  "en_es_TRANSFORMERS_general_rarity", 0.316, 0.146, 0.289, 0.133, "General Rarity", "ES"
+)
+
+# Create a DataFrame for genre rarity Spanish
+genre_rarity_es <- tribble(
+  ~lang, ~mean, ~sd, ~median, ~IQR,  ~type, ~language,
+  "es_genre_rarity", 0.0974, 0.117, 0.0698, 0.108,"Domain Rarity", "ES",
+  "en_es_DEEP_genre_rarity", 0.0966, 0.118, 0.0667, 0.111,"Domain Rarity", "ES",
+  "en_es_DEEPL_genre_rarity", 0.100, 0.120, 0.0704, 0.113,"Domain Rarity", "ES",
+  "en_es_GOOGLE_genre_rarity", 0.0977, 0.118, 0.0682, 0.113,"Domain Rarity", "ES",
+  "en_es_TRANSFORMERS_genre_rarity", 0.0910, 0.116, 0.0606, 0.122, "Domain Rarity", "ES",
+)
+
+general_rarity_es <- general_rarity_es %>%
+  mutate(
+    p_value = case_when(
+      lang == "en_es_TRANSFORMERS_general_rarity" ~ ">0.1",
+      lang == "en_es_GOOGLE_general_rarity" ~ "<0.01",
+      lang == "en_es_DEEPL_general_rarity" ~ "<0.01",
+      lang == "en_es_DEEP_general_rarity" ~ "<0.01",
+      lang == "es_general_rarity" ~ "Reference"
+    )
+  )
+
+genre_rarity_es <- genre_rarity_es %>%
+  mutate(
+    p_value = case_when(
+      lang == "en_es_TRANSFORMERS_genre_rarity" ~ "<0.01", # OPUS
+      lang == "en_es_GOOGLE_genre_rarity" ~ ">0.1",        # GT
+      lang == "en_es_DEEPL_genre_rarity" ~ ">0.1",         # DeepL
+      lang == "en_es_DEEP_genre_rarity" ~ ">0.1",          # Deep
+      lang == "es_genre_rarity" ~ "Reference"              # Native
+    )
+  )
+
+
+# General Rarity Plot into Spanish
+ggplot(general_rarity_es, aes(x = mean, y = lang, fill = p_value)) +
+  geom_segment(aes(x = mean -0.001, xend = mean + 0.001, y = lang, yend = lang), 
+               color = "black", size = 1) + 
+  geom_point(aes(shape = p_value, fill = p_value), size = 7, color = "black", position = position_dodge(0.9)) + 
+  labs(title = "General Rarity Means into Spanish",
+       x = "",
+       y = "",
+       fill = "P-Value",
+       shape = "P-Value") +
+  theme_minimal() +
+  scale_fill_manual(values = c("<0.01" = "black", "<0.05" = "grey50", "<0.1" = "grey90", ">0.1" = "white", "Reference" = "white")) +
+  scale_shape_manual(values = c("<0.01" = 21, "<0.05" = 21, "<0.1" = 21, ">0.1" = 21, "Reference" = 23)) +  
+  scale_y_discrete(labels = c(
+    "en_es_TRANSFORMERS_general_rarity" = "EN-ES OPUS",
+    "en_es_GOOGLE_general_rarity" = "EN-ES GT",
+    "en_es_DEEPL_general_rarity" = "EN-ES DeepL",
+    "en_es_DEEP_general_rarity" = "EN-ES Deep",
+    "es_general_rarity" = "NST"
+  )) +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 22),
+    axis.title.x = element_text(size = 12),
+    axis.title.y = element_text(size = 10),
+    axis.text.x = element_text(size = 18),
+    axis.text.y = element_text(size = 20)
+  )
+
+
+# Domain Rarity Plot into Spanish
+ggplot(genre_rarity_es, aes(x = mean, y = lang, fill = p_value)) +
+  geom_segment(aes(x = mean - 0.001, xend = mean + 0.001, y = lang, yend = lang), 
+               color = "black", size = 1) + 
+  geom_point(aes(shape = p_value, fill = p_value), size = 7, color = "black", position = position_dodge(0.9)) + 
+  labs(title = "Domain Rarity Means into Spanish",
+       x = "",
+       y = "",
+       fill = "P-Value",
+       shape = "P-Value") +
+  theme_minimal() +
+  scale_fill_manual(values = c("<0.01" = "black", "<0.05" = "grey50", "<0.1" = "grey90", ">0.1" = "white", "Reference" = "white")) +
+  scale_shape_manual(values = c("<0.01" = 21, "<0.05" = 21, "<0.1" = 21, ">0.1" = 21, "Reference" = 23)) +  
+  scale_y_discrete(labels = c(
+    "en_es_TRANSFORMERS_genre_rarity" = "EN-ES OPUS",
+    "en_es_GOOGLE_genre_rarity" = "EN-ES GT",
+    "en_es_DEEPL_genre_rarity" = "EN-ES DeepL",
+    "en_es_DEEP_genre_rarity" = "EN-ES Deep",
+    "es_genre_rarity" = "NST"
+  )) +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 22),
+    axis.title.x = element_text(size = 12),
+    axis.title.y = element_text(size = 10),
+    axis.text.x = element_text(size = 18),
+    axis.text.y = element_text(size = 20)
+  )
+
+```
+
+```{r}
+# Create a DataFrame for general rarity into Arabic
+general_rarity_ar <- tribble(
+  ~lang, ~mean, ~sd, ~median, ~IQR, ~type, ~language,
+  "ar_general_rarity",  0.594, 0.155, 0.585, 0.184, "General Rarity", "AR",
+  "en_ar_DEEP_general_rarity", 0.579, 0.159, 0.571, 0.188, "General Rarity", "AR",
+  "en_ar_DEEPL_general_rarity", 0.575, 0.161, 0.571, 0.196, "General Rarity", "AR",
+  "en_ar_GOOGLE_general_rarity", 0.579, 0.158, 0.571, 0.185, "General Rarity", "AR",
+  "en_ar_TRANSFORMERS_general_rarity", 0.586, 0.159, 0.581, 0.188,  "General Rarity", "AR"
+)
+
+# Create a DataFrame for genre rarity into Arabic
+genre_rarity_ar <- tribble(
+  ~lang, ~mean, ~sd, ~median, ~IQR, ~type, ~language,
+  "ar_genre_rarity", 0.249, 0.166, 0.222, 0.196, "Domain Rarity", "AR",
+  "en_ar_DEEP_genre_rarity", 0.221, 0.164, 0.2, 0.189,"Domain Rarity", "AR",
+  "en_ar_DEEPL_genre_rarity", 0.223, 0.164, 0.2, 0.189,"Domain Rarity", "AR",
+  "en_ar_GOOGLE_genre_rarity", 0.220, 0.163, 0.194, 0.186,"Domain Rarity", "AR",
+  "en_ar_TRANSFORMERS_genre_rarity", 0.224, 0.164, 0.2, 0.193,"Domain Rarity", "AR"
+)
+
+general_rarity_ar <- general_rarity_ar %>%
+  mutate(
+    p_value = case_when(
+      lang == "en_ar_TRANSFORMERS_general_rarity" ~ "<0.05", # OPUS
+      lang == "en_ar_GOOGLE_general_rarity" ~ "<0.01",       # GT
+      lang == "en_ar_DEEPL_general_rarity" ~ "<0.01",        # DeepL
+      lang == "en_ar_DEEP_general_rarity" ~ "<0.01",         # Deep
+      lang == "ar_general_rarity" ~ "Reference"             # Native
+    )
+  )
+
+genre_rarity_ar <- genre_rarity_ar %>%
+  mutate(
+    p_value = case_when(
+      lang == "en_ar_TRANSFORMERS_genre_rarity" ~ "<0.01",  # OPUS
+      lang == "en_ar_GOOGLE_genre_rarity" ~ "<0.01",         # GT
+      lang == "en_ar_DEEPL_genre_rarity" ~ "<0.01",          # DeepL
+      lang == "en_ar_DEEP_genre_rarity" ~ "<0.01",           # Deep
+      lang == "ar_genre_rarity" ~ "Reference"               # Native
+    )
+  )
+
+
+# General Rarity Plot into Arabic
+ggplot(general_rarity_ar, aes(x = mean, y = lang, fill = p_value)) +
+  geom_segment(aes(x = mean - 0.002, xend = mean + 0.002, y = lang, yend = lang), 
+               color = "black", size = 0.8) + 
+  geom_point(aes(shape = p_value, fill = p_value), size = 7, color = "black", position = position_dodge(0.9)) + 
+  labs(title = "General Rarity Means into Arabic",
+       x = "",
+       y = " ",
+       fill = "P-Value",
+       shape = "P-Value") +
+  theme_minimal() +
+  scale_fill_manual(values = c("<0.01" = "black", "<0.05" = "grey50", "<0.1" = "grey90", ">0.1" = "white", "Reference" = "white")) +
+  scale_shape_manual(values = c("<0.01" = 21, "<0.05" = 21, "<0.1" = 21, ">0.1" = 21, "Reference" = 23)) +   
+  scale_y_discrete(labels = c(
+    "en_ar_TRANSFORMERS_general_rarity" = "EN-AR OPUS ",
+    "en_ar_GOOGLE_general_rarity" = "EN-AR GT ",
+    "en_ar_DEEPL_general_rarity" = "EN-AR DeepL ",
+    "en_ar_DEEP_general_rarity" = "EN-AR Deep",
+    "ar_general_rarity" = "NST"
+  )) +
+  theme(
+    legend.position = "right",  
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 22),
+    axis.title.x = element_text(size = 10),
+    axis.title.y = element_text(size = 10),
+    axis.text.x = element_text(size = 18),
+    axis.text.y = element_text(size = 20)
+  )
+
+# Domain Rarity Plot into Arabic
+ggplot(genre_rarity_ar, aes(x = mean, y = lang, fill = p_value)) +
+  geom_segment(aes(x = mean - 0.003, xend = mean + 0.003, y = lang, yend = lang), 
+               color = "black", size = 0.8) +  
+  geom_point(aes(shape = p_value, fill = p_value), size = 7, color = "black", position = position_dodge(0.9)) + 
+  labs(title = "Domain Rarity Means into Arabic",
+       x = " ",
+       y = " ", 
+       fill = "P-Value",
+       shape = "P-Value") +  
+  theme_minimal() +
+  scale_fill_manual(values = c("<0.01" = "black", "<0.05" = "grey50", "<0.1" = "grey90", ">0.1" = "white", "Reference" = "white")) +
+  scale_shape_manual(values = c("<0.01" = 21, "<0.05" = 21, "<0.1" = 21, ">0.1" = 21, "Reference" = 23))+   
+  scale_y_discrete(labels = c(
+    "en_ar_TRANSFORMERS_genre_rarity" = "EN-AR OPUS",
+    "en_ar_GOOGLE_genre_rarity" = "EN-AR GT ",
+    "en_ar_DEEPL_genre_rarity" = "EN-AR DeepL",
+    "en_ar_DEEP_genre_rarity" = "EN-AR Deep ",
+    "ar_genre_rarity" = "NST"
+  )) +
+  theme(
+    legend.position = "right",  
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 22),
+    axis.title.x = element_text(size = 10),
+    axis.title.y = element_text(size = 10),
+    axis.text.x = element_text(size = 18),
+    axis.text.y = element_text(size = 20)
+  )
+
+```
+
